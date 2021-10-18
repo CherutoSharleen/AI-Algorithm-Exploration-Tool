@@ -23,13 +23,38 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
 
-CANCER = datasets.load_breast_cancer()
-IRIS = datasets.load_iris()
-DIGITS = datasets.load_digits()
-WINE = datasets.load_wine()
+#Functions to cache datasets
+@st.cache
+def load_breast_cancer_dataset():
+    return datasets.load_breast_cancer()
 
-CALIFORNIA = datasets.fetch_california_housing()
-DIABETES = datasets.load_diabetes()
+@st.cache
+def load_iris_dataset():
+    return datasets.load_iris()
+
+@st.cache
+def load_digits_dataset():
+    return datasets.load_digits()
+
+@st.cache
+def load_wine_dataset():
+    return datasets.load_wine()
+
+@st.cache
+def load_carlifonia_dataset():
+    return datasets.fetch_california_housing()
+
+@st.cache
+def load_diabetes_dataset():
+    return datasets.load_diabetes()
+
+CANCER = load_breast_cancer_dataset()
+IRIS = load_iris_dataset()
+DIGITS = load_digits_dataset()
+WINE = load_wine_dataset()
+
+CARLIFONIA = load_carlifonia_dataset()
+DIABETES = load_diabetes_dataset()
 
 data = None
 
