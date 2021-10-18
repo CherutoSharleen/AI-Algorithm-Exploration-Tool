@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.decomposition import PCA
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
@@ -208,7 +209,7 @@ def classification_page(dataset_choice, data):
     
 
 # REGRESSION PAGE INPUTS
-#1.	Linear Regression
+#1. Linear Regression
 def Linear_Regression_inputs():
     st.write("This is the linear regression model")
 
@@ -225,42 +226,42 @@ def Support_Vector_Regression_inputs():
 
 # REGRESSION ALGORITHM FUNCTIONS
 def Linear_Regression(data = data):
-	# Store the feature and target data
-	X = data.data
-	y = data.target
+    # Store the feature and target data
+    X = data.data
+    y = data.target
 
-	# Split the data using Scikit-Learn's train_test_split
-	X_train, X_test, y_train, y_test = train_test_split(X, y)
-	reg = LinearRegression()
-	reg.fit(X_train, y_train)
-	score = reg.score(X_test, y_test)
-	return(score)
+    # Split the data using Scikit-Learn's train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    reg = LinearRegression()
+    reg.fit(X_train, y_train)
+    score = reg.score(X_test, y_test)
+    return(score)
 
 def Ridge_Regression(data = data, alpha = 0.1):
-	# Store the feature and target data
-	X = data.data
-	y = data.target
+    # Store the feature and target data
+    X = data.data
+    y = data.target
 
-	# Split the data using Scikit-Learn's train_test_split
-	X_train, X_test, y_train, y_test = train_test_split(X, y)
-	reg = Ridge(alpha = alpha)
-	reg.fit(X_train, y_train)
-	score = reg.score(X_test, y_test)
-	return(score)
+    # Split the data using Scikit-Learn's train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    reg = Ridge(alpha = alpha)
+    reg.fit(X_train, y_train)
+    score = reg.score(X_test, y_test)
+    return(score)
 
 def Support_Vector_Regression(data = data, kernel = 'linear'):
-	#kernel{‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’}
+    #kernel{‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’}
 
-	# Store the feature and target data
-	X = data.data
-	y = data.target
+    # Store the feature and target data
+    X = data.data
+    y = data.target
 
-	# Split the data using Scikit-Learn's train_test_split
-	X_train, X_test, y_train, y_test = train_test_split(X, y)
-	reg = SVR(kernel=kernel)
-	reg.fit(X_train, y_train)
-	score = reg.score(X_test, y_test)
-	return(score)
+    # Split the data using Scikit-Learn's train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(X, y)
+    reg = SVR(kernel=kernel)
+    reg.fit(X_train, y_train)
+    score = reg.score(X_test, y_test)
+    return(score)
 
 # REGRESSION INPUTS + ALGORITHMS
 def regression_page(dataset_choice, data):
@@ -317,7 +318,7 @@ def kMeans_Clustering_inputs():
 # 2. DBSCAN Clustering
 def DBSCAN_Clustering_inputs():
     col1, col2 = st.columns(2)
-    eps = st.slider('Eps value', 0.1, 1.0)
+    eps = st.slider('Eps value', 0.1, 100.0)
     min_samples = col1.number_input('Minimum Number Of Samples', 1, 10, 5)
     metric = col2.selectbox(
         'Metric',
@@ -336,17 +337,67 @@ def Birch_Clustering_inputs():
 def kMeans_Clustering(n_clusters = 3,random_state = 1,n_init=10, data = data):
     X = data.data
     clustering = KMeans(n_clusters=n_clusters,random_state=random_state,n_init=n_init)
-    clustering.fit(X)
+
+    label = clustering.fit_predict(X)
+    u_labels = np.unique(label)
+
+    pca = PCA(2)
+
+    df = pca.fit_transform(X)
+ 
+    #plotting the results:
+    plots = [] 
+    fig = plt.figure()
+    for i in u_labels:
+        colors = ['r','b']
+        ax = fig.add_subplot(111)
+        ax.scatter(df[label == i , 0] , df[label == i , 1] , label = i)
+    plt.legend()
+    st.pyplot(fig)
 
 def DBSCAN_Clustering(eps=0.5, min_samples=5, metric='euclidean', data = data):
     X = data.data
     clustering = DBSCAN(eps=eps, min_samples=min_samples, metric=metric)
     clustering.fit(X)
 
+    label = clustering.fit_predict(X)
+    u_labels = np.unique(label)
+
+    pca = PCA(2)
+
+    df = pca.fit_transform(X)
+ 
+    #plotting the results:
+    plots = [] 
+    fig = plt.figure()
+    for i in u_labels:
+        colors = ['r','b']
+        ax = fig.add_subplot(111)
+        ax.scatter(df[label == i , 0] , df[label == i , 1] , label = i)
+    plt.legend()
+    st.pyplot(fig)
+
 def Birch_Clustering( n_clusters, threshold=0.5, branching_factor=50, data = data):
     X = data.data
     clustering = Birch(threshold=threshold, branching_factor=branching_factor, n_clusters=n_clusters)
     clustering.fit(X)
+
+    label = clustering.fit_predict(X)
+    u_labels = np.unique(label)
+
+    pca = PCA(2)
+
+    df = pca.fit_transform(X)
+ 
+    #plotting the results:
+    plots = [] 
+    fig = plt.figure()
+    for i in u_labels:
+        colors = ['r','b']
+        ax = fig.add_subplot(111)
+        ax.scatter(df[label == i , 0] , df[label == i , 1] , label = i)
+    plt.legend()
+    st.pyplot(fig)
 
 def clustering_page(dataset_choice, data):
     st.title("Clustering Algorithms")
