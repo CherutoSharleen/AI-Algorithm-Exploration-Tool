@@ -382,7 +382,16 @@ def clustering_page(dataset_choice, data):
 def home_page():
     st.title("Welcome to AI :bulb:")
 
-    st.image("https://media4.giphy.com/media/7VzgMsB6FLCilwS30v/200w.webp?cid=ecf05e470qdohkjl35f3tia0r1sz5xs67chf2zfxmq0sm4an&rid=200w.webp&ct=g")
+    col1, col2, col3 = st.columns([1,6,1])
+
+    with col1:
+        st.write("")
+
+    with col2:
+        st.image("https://media4.giphy.com/media/7VzgMsB6FLCilwS30v/200w.webp?cid=ecf05e470qdohkjl35f3tia0r1sz5xs67chf2zfxmq0sm4an&rid=200w.webp&ct=g")
+
+    with col3:
+        st.write("")
 
     st.header("The AI Algorithm Exploration Tool:fire:")
     st.write("""
