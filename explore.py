@@ -263,6 +263,46 @@ def Support_Vector_Regression(data = data, kernel = 'linear'):
     score = reg.score(X_test, y_test)
     return(score)
 
+#CALIFORNIA REGRESSION
+def california_regression_page(dataset_choice, data):
+    st.title("Regression Algorithms")
+    st.header(f"The {dataset_choice} dataset")
+    st.write('---')
+    reg_alg_choice = st.selectbox("Select a Regression Algorithm: ", ['Linear Regression', 'Ridge Regression'
+                                                                                    ])
+    if reg_alg_choice == 'Linear Regression':
+        #Linear_Regression_inputs()          --> Can be left out because there are no  inputs
+        score = Linear_Regression(data)
+    elif reg_alg_choice == 'Ridge Regression':
+        alpha = Ridge_Regression_inputs()   
+        score = Ridge_Regression(data, alpha)
+  
+
+    st.write('---')
+    st.write("Accuracy : ", score) #For training
+    st.write('---')
+    st.write("A sample of 10 rows from the dataset")
+    # st.write(data.data)
+    data_frame = np.c_[data.data, data.target]
+    columns = np.append(data.feature_names, ["target"])
+    data_frame = pd.DataFrame(data_frame, columns=columns)
+    st.write(data_frame.head(10))
+    st.write("---")
+    st.write("Visualization of the first 20 dataset entries")
+    st.bar_chart(data_frame[:20])
+    
+    #Plot the correlation matrix
+    st.write('---')
+    st.subheader('Correlation matrix')
+    corr_matrix = data_frame.corr()
+    corr_fig = plt.figure(figsize=(14,7))
+    sns.heatmap(corr_matrix, cmap=plt.cm.CMRmap_r, annot=True)
+    st.pyplot(corr_fig)
+    # Descriptive statistics
+    st.write('---')
+    st.subheader('Descriptive statistics')
+    st.write(data_frame.describe())
+
 # REGRESSION INPUTS + ALGORITHMS
 def regression_page(dataset_choice, data):
     st.title("Regression Algorithms")
@@ -502,9 +542,10 @@ def models_page():
         dataset_choice = st.sidebar.selectbox("Select a Dataset for Regression", ['California', 'Diabetes'])
         if dataset_choice == 'California':
             data = CALIFORNIA
+            california_regression_page(dataset_choice, data)
         elif dataset_choice == 'Diabetes':
             data = DIABETES
-        regression_page(dataset_choice, data)
+            regression_page(dataset_choice, data)
     else:
         dataset_choice = st.sidebar.selectbox("Select a Dataset for Clustering", ['Cancer', 'Iris', 'Digits','Wine'])
         if dataset_choice == 'Cancer':
