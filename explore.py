@@ -23,6 +23,8 @@ from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import Ridge
 from sklearn.svm import SVR
 
+st.set_page_config(page_title="AI Algorithms", page_icon=":shark:")
+
 #Functions to cache datasets
 @st.cache
 def load_breast_cancer_dataset():
@@ -53,12 +55,10 @@ IRIS = load_iris_dataset()
 DIGITS = load_digits_dataset()
 WINE = load_wine_dataset()
 
-CARLIFONIA = load_carlifonia_dataset()
+CALIFORNIA = load_carlifonia_dataset()
 DIABETES = load_diabetes_dataset()
 
 data = None
-
-st.set_page_config(page_title="AI Algorithms", page_icon=":shark:")
 
 #Removes the Right Hand Side Navigation Bar during deploy
 st.markdown(""" <style>
@@ -404,18 +404,23 @@ def clustering_page(dataset_choice, data):
 
 # Main Pages
 def home_page():
-    st.title("Welcome to AI :bulb:")
+#     st.title("Welcome to AI :bulb:")
 
-    col1, col2, col3 = st.columns([1,6,1])
+#     col1, col2, col3 = st.columns([1,6,1])
 
-    with col1:
-        st.write("")
+#     with col1:
+#         st.write("")
 
-    with col2:
-        st.image("https://media4.giphy.com/media/7VzgMsB6FLCilwS30v/200w.webp?cid=ecf05e470qdohkjl35f3tia0r1sz5xs67chf2zfxmq0sm4an&rid=200w.webp&ct=g")
+#     with col2:
+#         st.image("https://media4.giphy.com/media/7VzgMsB6FLCilwS30v/200w.webp?cid=ecf05e470qdohkjl35f3tia0r1sz5xs67chf2zfxmq0sm4an&rid=200w.webp&ct=g")
 
-    with col3:
-        st.write("")
+#     with col3:
+#         st.write("")
+    col1, col2,col3 = st.columns([1,3.5,1])
+    col2.title("Welcome to AI :bulb:")
+    cols1, cols2,cols3 = st.columns([1,2,1])
+    cols1.write("")
+    cols2.image("https://media4.giphy.com/media/7VzgMsB6FLCilwS30v/200w.webp?cid=ecf05e470qdohkjl35f3tia0r1sz5xs67chf2zfxmq0sm4an&rid=200w.webp&ct=g")
 
     st.header("The AI Algorithm Exploration Tool:fire:")
     st.write("""
