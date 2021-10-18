@@ -146,7 +146,6 @@ def classification_page(dataset_choice, data):
     st.write('---')
     st.write("Accuracy : ", score)
     st.write('---')
-    st.write('---')
     st.write("A sample of 10 rows from the dataset")
     data_frame = np.c_[data.data, data.target]
     columns = np.append(data.feature_names, ["target"])
