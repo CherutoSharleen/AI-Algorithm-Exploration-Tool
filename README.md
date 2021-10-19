@@ -9,7 +9,9 @@ The tool also allows the students to try out different datasets such as Californ
 * seaborn
 
 ## How to run locally
-Navigate to the folder where the project file is then run **streamlit run explore.py**
+Navigate to the folder where the project file is then run the command below on command line
+
+**streamlit run explore.py**
 
 The web application should launch on the default browser
 
