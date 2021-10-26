@@ -62,10 +62,7 @@ DIABETES = load_diabetes_dataset()
 data = None
 
 #Removes the Right Hand Side Navigation Bar during deploy
-st.markdown(""" <style>
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-</style> """, unsafe_allow_html=True)
+
 
 # CLASSIFICATION PAGE INPUT FUNCTIONS
 def kNN_Classifier_inputs():
@@ -263,45 +260,7 @@ def Support_Vector_Regression(data = data, kernel = 'linear'):
     score = reg.score(X_test, y_test)
     return(score)
 
-#CALIFORNIA REGRESSION
-def california_regression_page(dataset_choice, data):
-    st.title("Regression Algorithms")
-    st.header(f"The {dataset_choice} dataset")
-    st.write('---')
-    reg_alg_choice = st.selectbox("Select a Regression Algorithm: ", ['Linear Regression', 'Ridge Regression'
-                                                                                    ])
-    if reg_alg_choice == 'Linear Regression':
-        #Linear_Regression_inputs()          --> Can be left out because there are no  inputs
-        score = Linear_Regression(data)
-    elif reg_alg_choice == 'Ridge Regression':
-        alpha = Ridge_Regression_inputs()   
-        score = Ridge_Regression(data, alpha)
-  
 
-    st.write('---')
-    st.write("Accuracy : ", score) #For training
-    st.write('---')
-    st.write("A sample of 10 rows from the dataset")
-    # st.write(data.data)
-    data_frame = np.c_[data.data, data.target]
-    columns = np.append(data.feature_names, ["target"])
-    data_frame = pd.DataFrame(data_frame, columns=columns)
-    st.write(data_frame.head(10))
-    st.write("---")
-    st.write("Visualization of the first 20 dataset entries")
-    st.bar_chart(data_frame[:20])
-    
-    #Plot the correlation matrix
-    st.write('---')
-    st.subheader('Correlation matrix')
-    corr_matrix = data_frame.corr()
-    corr_fig = plt.figure(figsize=(14,7))
-    sns.heatmap(corr_matrix, cmap=plt.cm.CMRmap_r, annot=True)
-    st.pyplot(corr_fig)
-    # Descriptive statistics
-    st.write('---')
-    st.subheader('Descriptive statistics')
-    st.write(data_frame.describe())
 
 # REGRESSION INPUTS + ALGORITHMS
 def regression_page(dataset_choice, data):
@@ -345,6 +304,45 @@ def regression_page(dataset_choice, data):
     st.subheader('Descriptive statistics')
     st.write(data_frame.describe())
 
+#CALIFORNIA REGRESSION
+def california_regression_page(dataset_choice, data):
+    st.title("Regression Algorithms")
+    st.header(f"The {dataset_choice} dataset")
+    st.write('---')
+    reg_alg_choice = st.selectbox("Select a Regression Algorithm: ", ['Linear Regression', 'Ridge Regression'
+                                                                                    ])
+    if reg_alg_choice == 'Linear Regression':
+        #Linear_Regression_inputs()          --> Can be left out because there are no  inputs
+        score = Linear_Regression(data)
+    elif reg_alg_choice == 'Ridge Regression':
+        alpha = Ridge_Regression_inputs()   
+        score = Ridge_Regression(data, alpha)
+  
+
+    st.write('---')
+    st.write("Accuracy : ", score) #For training
+    st.write('---')
+    st.write("A sample of 10 rows from the dataset")
+    # st.write(data.data)
+    data_frame = np.c_[data.data, data.target]
+    columns = np.append(data.feature_names, ["target"])
+    data_frame = pd.DataFrame(data_frame, columns=columns)
+    st.write(data_frame.head(10))
+    st.write("---")
+    st.write("Visualization of the first 20 dataset entries")
+    st.bar_chart(data_frame[:20])
+    
+    #Plot the correlation matrix
+    st.write('---')
+    st.subheader('Correlation matrix')
+    corr_matrix = data_frame.corr()
+    corr_fig = plt.figure(figsize=(14,7))
+    sns.heatmap(corr_matrix, cmap=plt.cm.CMRmap_r, annot=True)
+    st.pyplot(corr_fig)
+    # Descriptive statistics
+    st.write('---')
+    st.subheader('Descriptive statistics')
+    st.write(data_frame.describe())
 #CLUSTERING PAGE INPUTS
 #1. K-Means Clustering
 def kMeans_Clustering_inputs():
@@ -362,7 +360,8 @@ def DBSCAN_Clustering_inputs():
     min_samples = col1.number_input('Minimum Number Of Samples', 1, 10, 5)
     metric = col2.selectbox(
         'Metric',
-        ('euclidean', 'manhattan', 'chebyshev', 'minkowski', 'seucledian', 'mahalanobis'), key="DBSCAN metric")
+        #('euclidean', 'manhattan', 'chebyshev', 'minkowski', 'seucledian', 'mahalanobis'), key="DBSCAN metric")
+        ('euclidean', 'manhattan', 'chebyshev', 'minkowski'), key="DBSCAN metric")
     return eps, min_samples, metric
 
 #3 Birch Clustering
