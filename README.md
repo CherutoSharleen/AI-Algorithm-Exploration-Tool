@@ -18,6 +18,6 @@ The web application should launch on the default browser
 ## How to run from the web
 Simply use the link below:
 
-http://mlmodelscomparisontool.azurewebsites.net/
+#http://mlmodelscomparisontool.azurewebsites.net/
 
-which should take you to our homepage
+#which should take you to our homepage
