@@ -1,0 +1,22 @@
+[
+  {
+    "id": "d1",
+    "title": "Library Robotics Club",
+    "text": "Students built small robots in the city library innovation club and presented search-and-sort demos."
+  },
+  {
+    "id": "d2",
+    "title": "Campus Garden Sensors",
+    "text": "A gardening team installed low-cost moisture sensors and tracked weekly soil health trends."
+  },
+  {
+    "id": "d3",
+    "title": "History Debate Society",
+    "text": "Debate members compared colonial trade routes and documented references from local archives."
+  },
+  {
+    "id": "d4",
+    "title": "Python Study Circle",
+    "text": "Beginners practiced Python loops, conditionals, and text-processing tasks in evening sessions."
+  }
+]
