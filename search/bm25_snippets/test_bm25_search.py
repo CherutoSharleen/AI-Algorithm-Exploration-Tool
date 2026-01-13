@@ -15,6 +15,11 @@ class BM25SnippetTests(unittest.TestCase):
         top = search(docs, "robotics club", top_k=1)[0][0]
         self.assertEqual(top, "Library Robotics Club")
 
+    def test_min_score_filters_zero_results(self) -> None:
+        docs = load_documents(Path(__file__).resolve().parent / "documents.json")
+        results = search(docs, "unmatchedterm", top_k=3, min_score=0.0001)
+        self.assertEqual(results, [])
+
 
 if __name__ == "__main__":
     unittest.main()

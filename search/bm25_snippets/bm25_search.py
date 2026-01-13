@@ -34,7 +34,9 @@ def _snippet(text: str, query_tokens: list[str], width: int = 7) -> str:
     return " ".join(words[: min(len(words), width * 2)])
 
 
-def search(documents: list[dict[str, str]], query: str, top_k: int = 3) -> list[tuple[str, float, str]]:
+def search(
+    documents: list[dict[str, str]], query: str, top_k: int = 3, min_score: float = 0.0
+) -> list[tuple[str, float, str]]:
     query_tokens = tokenize(query)
     expanded = list(query_tokens)
     for token in query_tokens:
@@ -64,7 +66,7 @@ def search(documents: list[dict[str, str]], query: str, top_k: int = 3) -> list[
         scored.append((doc["title"], score, snippet))
 
     scored.sort(key=lambda row: row[1], reverse=True)
-    return scored[:top_k]
+    return [row for row in scored if row[1] >= min_score][:top_k]
 
 
 def main() -> None:
