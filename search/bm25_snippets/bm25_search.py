@@ -73,7 +73,9 @@ def main() -> None:
     base = Path(__file__).resolve().parent
     docs = load_documents(base / "documents.json")
     query = input("Enter search query: ").strip()
-    for rank, (title, score, snippet) in enumerate(search(docs, query), start=1):
+    top_k_text = input("Top K results [3]: ").strip()
+    top_k = int(top_k_text) if top_k_text else 3
+    for rank, (title, score, snippet) in enumerate(search(docs, query, top_k=top_k), start=1):
         print(f"{rank}. {title} | score={score:.4f}")
         print(f"   snippet: {snippet}")
 
