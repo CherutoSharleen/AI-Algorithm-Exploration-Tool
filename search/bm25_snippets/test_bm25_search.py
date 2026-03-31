@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from bm25_search import load_documents, search
+from bm25_search import load_documents, search, search_with_matched_terms
 
 
 class BM25SnippetTests(unittest.TestCase):
@@ -19,6 +19,12 @@ class BM25SnippetTests(unittest.TestCase):
         docs = load_documents(Path(__file__).resolve().parent / "documents.json")
         results = search(docs, "unmatchedterm", top_k=3, min_score=0.0001)
         self.assertEqual(results, [])
+
+    def test_search_with_matched_terms(self) -> None:
+        docs = load_documents(Path(__file__).resolve().parent / "documents.json")
+        results = search_with_matched_terms(docs, "robot club", top_k=1)
+        self.assertEqual(results[0]["title"], "Library Robotics Club")
+        self.assertIn("club", results[0]["matched_terms"])
 
 
 if __name__ == "__main__":

@@ -69,6 +69,19 @@ def search(
     return [row for row in scored if row[1] >= min_score][:top_k]
 
 
+def search_with_matched_terms(
+    documents: list[dict[str, str]], query: str, top_k: int = 3
+) -> list[dict[str, object]]:
+    raw = search(documents, query, top_k=top_k)
+    query_terms = set(tokenize(query))
+    enriched: list[dict[str, object]] = []
+    for title, score, snippet in raw:
+        doc = next(item for item in documents if item["title"] == title)
+        matched = sorted(query_terms & set(tokenize(doc["text"])))
+        enriched.append({"title": title, "score": score, "snippet": snippet, "matched_terms": matched})
+    return enriched
+
+
 def main() -> None:
     base = Path(__file__).resolve().parent
     docs = load_documents(base / "documents.json")
