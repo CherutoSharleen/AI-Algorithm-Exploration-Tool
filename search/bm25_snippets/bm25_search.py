@@ -82,6 +82,20 @@ def search_with_matched_terms(
     return enriched
 
 
+def expanded_query_tokens(query: str) -> list[str]:
+    base_tokens = tokenize(query)
+    expanded = list(base_tokens)
+    for token in base_tokens:
+        expanded.extend(SYNONYMS.get(token, []))
+    unique: list[str] = []
+    seen = set()
+    for token in expanded:
+        if token not in seen:
+            seen.add(token)
+            unique.append(token)
+    return unique
+
+
 def main() -> None:
     base = Path(__file__).resolve().parent
     docs = load_documents(base / "documents.json")

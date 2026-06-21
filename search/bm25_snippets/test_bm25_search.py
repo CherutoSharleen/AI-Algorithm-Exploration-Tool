@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from bm25_search import load_documents, search, search_with_matched_terms
+from bm25_search import expanded_query_tokens, load_documents, search, search_with_matched_terms
 
 
 class BM25SnippetTests(unittest.TestCase):
@@ -25,6 +25,11 @@ class BM25SnippetTests(unittest.TestCase):
         results = search_with_matched_terms(docs, "robot club", top_k=1)
         self.assertEqual(results[0]["title"], "Library Robotics Club")
         self.assertIn("club", results[0]["matched_terms"])
+
+    def test_expanded_query_tokens_include_synonyms(self) -> None:
+        tokens = expanded_query_tokens("robotics coding")
+        self.assertIn("robot", tokens)
+        self.assertIn("python", tokens)
 
 
 if __name__ == "__main__":
