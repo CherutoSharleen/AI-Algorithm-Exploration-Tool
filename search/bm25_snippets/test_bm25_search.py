@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from bm25_search import expanded_query_tokens, load_documents, search, search_with_matched_terms
+from bm25_search import document_terms, expanded_query_tokens, load_documents, search, search_with_matched_terms
 
 
 class BM25SnippetTests(unittest.TestCase):
@@ -30,6 +30,11 @@ class BM25SnippetTests(unittest.TestCase):
         tokens = expanded_query_tokens("robotics coding")
         self.assertIn("robot", tokens)
         self.assertIn("python", tokens)
+
+    def test_document_terms(self) -> None:
+        docs = load_documents(Path(__file__).resolve().parent / "documents.json")
+        terms = document_terms(docs, "Library Robotics Club")
+        self.assertIn("robots", terms)
 
 
 if __name__ == "__main__":

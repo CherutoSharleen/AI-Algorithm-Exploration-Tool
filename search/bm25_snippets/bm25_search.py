@@ -96,6 +96,11 @@ def expanded_query_tokens(query: str) -> list[str]:
     return unique
 
 
+def document_terms(documents: list[dict[str, str]], title: str) -> list[str]:
+    doc = next(item for item in documents if item["title"] == title)
+    return sorted(set(tokenize(doc["text"])))
+
+
 def main() -> None:
     base = Path(__file__).resolve().parent
     docs = load_documents(base / "documents.json")
