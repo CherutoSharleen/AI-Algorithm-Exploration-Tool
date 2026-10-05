@@ -101,6 +101,10 @@ def document_terms(documents: list[dict[str, str]], title: str) -> list[str]:
     return sorted(set(tokenize(doc["text"])))
 
 
+def top_result_titles(documents: list[dict[str, str]], query: str, top_k: int = 3) -> list[str]:
+    return [title for title, _, _ in search(documents, query, top_k=top_k)]
+
+
 def main() -> None:
     base = Path(__file__).resolve().parent
     docs = load_documents(base / "documents.json")
