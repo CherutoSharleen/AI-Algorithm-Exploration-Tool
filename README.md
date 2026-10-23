@@ -21,3 +21,10 @@ Simply use the link below:
 http://mlmodelscomparisontool.azurewebsites.net/
 
 which should take you to our homepage
+
+## Educational mini-project in this repository
+
+- **Path:** `search/bm25_snippets`
+- **Focus:** BM25 ranking, snippets, and token-overlap explanations over synthetic documents.
+- **Run:** `cd search/bm25_snippets && python bm25_search.py`
+- **Test:** `cd search/bm25_snippets && python -m unittest test_bm25_search.py test_evaluate_queries.py`
